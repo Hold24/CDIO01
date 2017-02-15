@@ -2,51 +2,56 @@ package main;
 import java.sql.*;
 
 public class main {
-	// JDBC driver name and database URL
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:mysql://localhost/";
 
-	//  Database credentials
-	static final String USER = "username";
-	static final String PASS = "password";
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  		// Driver name:
+	static final String DB_URL = "jdbc:mysql://localhost/";				// Database URL:
+
+	static final String USER = "username";								// Data credentials - user name
+	static final String PASS = "password";								// Password
 
 	public static void main(String[] args) {
+
 		Connection conn = null;
 		Statement stmt = null;
-		
+
 		try{
-			//STEP 2: Register JDBC driver
-			Class.forName("com.mysql.jdbc.Driver");
 
-			//STEP 3: Open a connection
-			System.out.println("Connecting to database...");
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			Class.forName("com.mysql.jdbc.Driver"); 					// Register JDBC driver
 
-			//STEP 4: Execute a query
-			System.out.println("Creating database...");
-			stmt = conn.createStatement();
+			System.out.println("Connecting to database...");			// Open a connection to the database
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);		//
 
-			String sql = "CREATE DATABASE STUDENTS";
+			System.out.println("Creating database...");					// Creating the database
+			stmt = conn.createStatement();								// And whatever you have set up more
+
+			String sql = "CREATE DATABASE USERS";
 			stmt.executeUpdate(sql);
 			System.out.println("Database created successfully...");
-			
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
-		}finally{
-			//finally block used to close resources
-			try{
+
+		}
+
+		catch(SQLException se){
+			se.printStackTrace();										//Handle errors for JDBC
+		}
+
+		catch(Exception e){
+			e.printStackTrace();										//Handle errors for Class.forName
+		}
+
+		finally{
+			try{														//finally block used to close resources
 				if(stmt!=null)
 					stmt.close();
-			}catch(SQLException se2){
-			}// nothing we can do
-			try{
+			}
+			catch(SQLException se2){
+
+			}
+			try{														// nothing we can do
 				if(conn!=null)
 					conn.close();
-			}catch(SQLException se){
+			}
+
+			catch(SQLException se){
 				se.printStackTrace();
 			}//end finally try
 		}//end try
