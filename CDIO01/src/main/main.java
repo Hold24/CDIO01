@@ -10,7 +10,10 @@ public class main {
 	static final String PASS = "password";								// Password
 
 	public static void main(String[] args) {
-
+		
+		String a = "a";
+		String b = "b";
+		
 		Connection conn = null;
 		Statement stmt = null;
 
