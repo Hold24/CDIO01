@@ -1,5 +1,7 @@
 package boundary;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TUI {
@@ -14,6 +16,17 @@ public class TUI {
 			if(x < 1 || x > 4)
 				System.out.println("Ikke gyldig værdi. Prøv igen.");
 		} while (x < 1 || x > 4);
+		return x;
+	}
+	
+	public static int updateMenu(){
+		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden.\n1. Skift navn \n2. Skift CPR \n3. Opdater roller \n4. Skift initialer. \n5. Skift password");
+		int x;
+		do {
+			x = keyboard.nextInt();
+			if(x < 1 || x > 5)
+				System.out.println("Ikke gyldig værdi. Prøv igen.");
+		} while (x < 1 || x > 5);
 		return x;
 	}
 
@@ -35,6 +48,7 @@ public class TUI {
 	public static String userName() {
 		System.out.println("Indskriv det fulde navn på brugeren.");
 		String str;
+		str = keyboard.nextLine();
 		do {
 			str = keyboard.nextLine();
 			if (str.length() < 2 || str.length() > 20)
@@ -54,20 +68,28 @@ public class TUI {
 		return str;
 	}
 
-	public static String userRole() {
-		System.out.println("Indskriv rolle for brugeren. Rollerne kan være: Admin, Pharmacist, Foreman, Operator");
+	public static List<String> userRole() {
+		ArrayList<String> roles = new ArrayList<String>();
 		String str;
 		boolean illegalRole;
 		do {
-			str = keyboard.nextLine();
-			if (!str.equals("Admin") && !str.equals("Pharmacist") && !str.equals("Foreman") && !str.equals("Operator")){
-				System.out.println("Rolle er ikke gyldig. Prøv igen.");
-				illegalRole = true;
-			}
-			else
-				illegalRole = false;
+			do{
+				System.out.println("Indskriv rolle for brugeren. Rollerne kan være: Admin, Pharmacist, Foreman, Operator");
+				str = keyboard.nextLine();
+				if (!str.equals("Admin") && !str.equals("Pharmacist") && !str.equals("Foreman") && !str.equals("Operator")){
+					System.out.println("Rolle er ikke gyldig. Prøv igen.");
+					illegalRole = true;
+				}
+				else{
+					illegalRole = false;
+				}
+				if (roles.contains(str))
+					System.out.println("Du har allerede denne rolle");
+				else
+					roles.add(str);
+			} while(TUI.anotherRole());
 		} while (illegalRole);
-		return str;
+		return roles;
 	}
 
 	public static String userInitials(){
@@ -82,10 +104,41 @@ public class TUI {
 	}
 
 	public static String userPassword() {
-		return null;
+		String str = keyboard.nextLine();
+		return str;
 		//Password generator
 	}
 
+	public static boolean anotherRole(){
+		System.out.println("Vil du gerne tilføje en ekstra rolle til brugeren? ja/nej");
+		String str = keyboard.nextLine().toLowerCase();
+		if(str.equals("ja"))
+			return true;
+		else
+			return false;
+
+	}
 	
+	public static int changeUserRole() {
+		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden. \n1. Fjern rolle. \n2. Tilføj rolle.");
+		int x;
+		do {
+		x = keyboard.nextInt();
+		if (x != 1 && x != 2)
+			System.out.println("Ugyldig værdi. Prøv igen.");
+		} while (x != 1 && x != 2);
+		return x;
+	}
+	
+	public static String removeRole(List<String> roles) {
+		System.out.println("Which role to remove? \n" + "User has following roles: " + roles);
+		String str;
+		do {
+			str = keyboard.nextLine();			
+		} while(!roles.contains(str));
+		return str;
+	}
+
+
 
 }

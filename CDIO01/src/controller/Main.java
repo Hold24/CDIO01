@@ -15,11 +15,11 @@ public class Main {
 		do{
 			switch (TUI.Menu()) {
 			// create user
-			case 1:  
+			case 1: 
 				UserDTO user = new UserDTO();
 				user.setUserName(TUI.userName());
 				user.setCpr(TUI.userCPR());
-				user.addRole(TUI.userRole());
+				user.setRoles(TUI.userRole());
 				user.setIni(TUI.userInitials());
 				try {
 					um.createUser(user);
@@ -43,6 +43,7 @@ public class Main {
 			case 3:
 				try {
 					um.updateUser(um.getUser(TUI.updateUser()));
+					
 				} catch (DALException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
