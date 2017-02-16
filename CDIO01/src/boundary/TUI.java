@@ -60,8 +60,8 @@ public class TUI {
 		boolean illegalRole;
 		do {
 			str = keyboard.nextLine();
-			if (!str.equals("Admin") || !str.equals("Pharmacist") || !str.equals("Foreman") || !str.equals("Operator")){
-				System.out.println("Rolle er ikke gyldigt. Prøv igen.");
+			if (!str.equals("Admin") && !str.equals("Pharmacist") && !str.equals("Foreman") && !str.equals("Operator")){
+				System.out.println("Rolle er ikke gyldig. Prøv igen.");
 				illegalRole = true;
 			}
 			else
