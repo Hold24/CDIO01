@@ -46,7 +46,16 @@ public class UserManagement implements IUserDAO {
 				user.roleRemover(TUI.removeRole(user.getRoles()));
 			}
 			else {
-				
+				boolean hasRole = true;
+				do {
+					String role = TUI.addRole();
+					if (!user.getRoles().contains(role)){
+						user.addRole(role);
+						hasRole = false;
+					}
+					else
+						TUI.hasRole();
+				} while (hasRole);
 			}
 			break;
 		case 4: 
@@ -61,9 +70,10 @@ public class UserManagement implements IUserDAO {
 
 	}
 
+	
 	@Override
 	public void deleteUser(int userId) throws DALException {
-		// TODO Auto-generated method stub
+		us.removeUser(us.getUserList().get(userId - 11));
 
 	}
 

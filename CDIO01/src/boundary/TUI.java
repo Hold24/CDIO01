@@ -9,18 +9,7 @@ public class TUI {
 	static Scanner keyboard = new Scanner(System.in);
 
 	public static int Menu(){
-		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden.\n1. Opret bruger \n2. Vis brugere \n3. Opdater bruger \n4. Slet brugere.");
-		int x;
-		do {
-			x = keyboard.nextInt();
-			if(x < 1 || x > 4)
-				System.out.println("Ikke gyldig værdi. Prøv igen.");
-		} while (x < 1 || x > 4);
-		return x;
-	}
-	
-	public static int updateMenu(){
-		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden.\n1. Skift navn \n2. Skift CPR \n3. Opdater roller \n4. Skift initialer. \n5. Skift password");
+		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden.\n1. Opret bruger \n2. Vis brugere \n3. Opdater bruger \n4. Slet brugere. \n5. Log af.");
 		int x;
 		do {
 			x = keyboard.nextInt();
@@ -29,12 +18,23 @@ public class TUI {
 		} while (x < 1 || x > 5);
 		return x;
 	}
+	
+	public static int updateMenu(){
+		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden.\n1. Skift navn \n2. Skift CPR \n3. Opdater roller \n4. Skift initialer. \n5. Skift password \n6. Gå tilbage til forrige menu.");
+		int x;
+		do {
+			x = keyboard.nextInt();
+			if(x < 1 || x > 6)
+				System.out.println("Ikke gyldig værdi. Prøv igen.");
+		} while (x < 1 || x > 6);
+		return x;
+	}
 
 	public static void showUser(String a){
 		System.out.println(a);
 	}
 
-	public static int updateUser() {
+	public static int chooseUser() {
 		System.out.println("Vælg en bruger ud fra deres id (mellem 11-99).");
 		int x;
 		do {
@@ -91,6 +91,27 @@ public class TUI {
 		} while (illegalRole);
 		return roles;
 	}
+	
+	public static String addRole() {
+		String str;
+		boolean illegalRole;
+		do {
+			System.out.println("Indskriv rolle for brugeren. Rollerne kan være: Admin, Pharmacist, Foreman, Operator");
+			str = keyboard.nextLine();
+			if (!str.equals("Admin") && !str.equals("Pharmacist") && !str.equals("Foreman") && !str.equals("Operator")){
+				System.out.println("Rolle er ikke gyldig. Prøv igen.");
+				illegalRole = true;
+			}
+			else{
+				illegalRole = false;
+			}
+		} while (illegalRole);
+		return str;
+	}
+	
+	public static void hasRole() {
+		System.out.println("Brugeren har allerede denne rolle. Prøv igen.");
+	}
 
 	public static String userInitials(){
 		System.out.println("Indskriv initialerne for brugeren.");
@@ -125,13 +146,13 @@ public class TUI {
 		do {
 		x = keyboard.nextInt();
 		if (x != 1 && x != 2)
-			System.out.println("Ugyldig værdi. Prøv igen.");
+			System.out.println("Ugyldig vÃ¦rdi. PrÃ¸v igen.");
 		} while (x != 1 && x != 2);
 		return x;
 	}
 	
 	public static String removeRole(List<String> roles) {
-		System.out.println("Which role to remove? \n" + "User has following roles: " + roles);
+		System.out.println("Hvilken rolle vil du gerne fjerne? \n" + "Brugeren har følgende roller: " + roles);
 		String str;
 		do {
 			str = keyboard.nextLine();			
@@ -139,6 +160,15 @@ public class TUI {
 		return str;
 	}
 
-
+	public static void shutDown() {
+		System.out.println("Du er nu logget af.");
+	}
+	
+	public static void nullUser() {
+		System.out.println("Der eksisterer ikke nogen bruger med denne id. Prøv igen.");
+	}
+	public static void newLine(){
+		System.out.println("");
+	}
 
 }
