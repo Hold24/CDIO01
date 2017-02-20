@@ -5,10 +5,13 @@ import java.util.List;
 import boundary.TUI;
 import entity.UserDTO;
 import entity.UserStore;
+import entity.passwordGenerator;
 
 public class UserManagement implements IUserDAO {
 
 	UserStore us = new UserStore();
+	private int id = 11;
+	passwordGenerator pg = new passwordGenerator();
 
 
 	@Override
@@ -26,7 +29,9 @@ public class UserManagement implements IUserDAO {
 	@Override
 	public void createUser(UserDTO user) throws DALException {
 		// TODO Auto-generated method stub
-		user.setUserId(us.getUserList().size() + 11);
+		user.setUserId(id);
+		user.setPassword(pg.createPassword());
+		id++;
 		us.addUser(user);
 
 	}
@@ -38,7 +43,8 @@ public class UserManagement implements IUserDAO {
 		case 1:
 			user.setUserName(TUI.userName());
 			break;
-		case 2: 
+		case 2:
+			TUI.nextLine();
 			user.setCpr(TUI.userCPR());
 			break;
 		case 3: 
@@ -59,6 +65,7 @@ public class UserManagement implements IUserDAO {
 			}
 			break;
 		case 4: 
+			TUI.nextLine();
 			user.setIni(TUI.userInitials());
 			break;
 		case 5: 
@@ -70,11 +77,12 @@ public class UserManagement implements IUserDAO {
 
 	}
 
-	
+
 	@Override
 	public void deleteUser(int userId) throws DALException {
 		us.removeUser(us.getUserList().get(userId - 11));
-
+		if(us.getUserList().size() > 0)
+			this.id = us.getUserList().get(us.getUserList().size() - 1).getUserId() + 1;
 	}
 
 }
