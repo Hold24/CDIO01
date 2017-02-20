@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+
 import boundary.TUI;
 import controller.IUserDAO.DALException;
 import controller.UserManagement;
@@ -70,12 +71,19 @@ public class Main {
 
 	private void createUser(UserManagement um) {
 		UserDTO user = new UserDTO();
-		boolean userExists;
+		boolean idTaken = true;
+		int x;
 		do{
-			int x = TUI.userId();
-			if(um.getUserList().stream().anyMatch())
-				userExists = false;
-		} while(userExists);
+			x = TUI.userId();
+			try {
+				int b = x;
+				idTaken = um.getUserList().stream().anyMatch(e -> e.getUserId() == b);
+			} catch (DALException e1) {
+				e1.printStackTrace();
+			}
+			if(idTaken)
+				TUI.idTaken();
+		} while(idTaken);
 		user.setUserId(x);
 		user.setUserName(TUI.userName());
 		user.setCpr(TUI.userCPR());

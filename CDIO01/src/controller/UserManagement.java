@@ -27,7 +27,7 @@ public class UserManagement implements IUserDAO {
 
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
-		// TODO Auto-generated method stub
+		
 		return us.getUserList();
 	}
 

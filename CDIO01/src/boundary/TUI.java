@@ -95,10 +95,9 @@ public class TUI {
 				}
 				if (roles.contains(str))
 					System.out.println("Du har allerede denne rolle");
-				else
-					roles.add(str);
-			} while(TUI.anotherRole());
-		} while (illegalRole);
+			} while(illegalRole);
+			roles.add(str);
+		} while (TUI.anotherRole());
 		return roles;
 	}
 
@@ -161,12 +160,12 @@ public class TUI {
 	}
 
 	public static int changeUserRole() {
-		System.out.println("VÃ¦lg en fÃ¸lgende muligheder, ved at taste nummeret foran muligheden. \n1. Fjern rolle. \n2. TilfÃ¸j rolle.");
+		System.out.println("Vælg en følgende muligheder, ved at taste nummeret foran muligheden. \n1. Fjern rolle. \n2. Tilføj rolle.");
 		String str;
 		do {
 			str = keyboard.nextLine();
 			if (str != "1" && str != "2")
-				System.out.println("Ugyldig vÃƒÂ¦rdi. PrÃƒÂ¸v igen.");
+				System.out.println("Ugyldig værdi. Prøv igen.");
 		} while (str != "1" && str != "2");
 		return Integer.parseInt(str);
 	}
@@ -194,16 +193,20 @@ public class TUI {
 		keyboard.nextLine();
 	}
 	public static int userId(){
-		System.out.println("VÃ¦lg en bruger id (mellem 11-99).");
+		System.out.println("Vælg en bruger id (mellem 11-99).");
 		String str;
 		int x;
 		do {
 			str = keyboard.nextLine();
 			x = Integer.parseInt(str);
 			if (x < 11 || x > 99)
-				System.out.println("Ikke gyldig vÃ¦rdi. PrÃ¸v igen.");
+				System.out.println("Ikke gyldig værdi. Prøv igen.");
 		} while (x < 11 || x > 99);
 		return x;
+	}
+	
+	public static void idTaken(){
+		System.out.println("The user id you picked is already taken");
 	}
 
 }
