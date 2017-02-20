@@ -10,7 +10,7 @@ import entity.passwordGenerator;
 public class UserManagement implements IUserDAO {
 
 	UserStore us = new UserStore();
-	private int id = 11;
+	//private int id = 11;
 	passwordGenerator pg = new passwordGenerator();
 
 
@@ -29,9 +29,9 @@ public class UserManagement implements IUserDAO {
 	@Override
 	public void createUser(UserDTO user) throws DALException {
 		// TODO Auto-generated method stub
-		user.setUserId(id);
+		user.setUserId(us.nextId());
 		user.setPassword(pg.createPassword());
-		id++;
+		//id++;
 		us.addUser(user);
 
 	}
@@ -81,8 +81,8 @@ public class UserManagement implements IUserDAO {
 	@Override
 	public void deleteUser(int userId) throws DALException {
 		us.removeUser(us.getUserList().get(userId - 11));
-		if(us.getUserList().size() > 0)
-			this.id = us.getUserList().get(us.getUserList().size() - 1).getUserId() + 1;
+//		if(us.getUserList().size() > 0)
+//			this.id = us.getUserList().get(us.getUserList().size() - 1).getUserId() + 1;
 	}
 
 }
