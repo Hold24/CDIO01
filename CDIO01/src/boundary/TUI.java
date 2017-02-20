@@ -193,5 +193,17 @@ public class TUI {
 	public static void nextLine(){
 		keyboard.nextLine();
 	}
+	public static int userId(){
+		System.out.println("VÃ¦lg en bruger id (mellem 11-99).");
+		String str;
+		int x;
+		do {
+			str = keyboard.nextLine();
+			x = Integer.parseInt(str);
+			if (x < 11 || x > 99)
+				System.out.println("Ikke gyldig vÃ¦rdi. PrÃ¸v igen.");
+		} while (x < 11 || x > 99);
+		return x;
+	}
 
 }

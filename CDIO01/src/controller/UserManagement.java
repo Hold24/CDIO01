@@ -16,9 +16,14 @@ public class UserManagement implements IUserDAO {
 
 	@Override
 	public UserDTO getUser(int userId) throws DALException {
-		// TODO Auto-generated method stub
-		return us.getUserList().get(userId - 11);
+		
+		for(int i = 0; i < us.getUserList().size(); i++){
+			if(us.getUserList().get(i).getUserId() == userId)
+				return us.getUserList().get(i);
+		}
+		throw new UserNotFoundException("userID " + userId + " not found.");
 	}
+	
 
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
@@ -29,9 +34,7 @@ public class UserManagement implements IUserDAO {
 	@Override
 	public void createUser(UserDTO user) throws DALException {
 		// TODO Auto-generated method stub
-		user.setUserId(us.nextId());
 		user.setPassword(pg.createPassword());
-		//id++;
 		us.addUser(user);
 
 	}

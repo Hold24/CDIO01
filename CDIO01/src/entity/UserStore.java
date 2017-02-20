@@ -31,22 +31,4 @@ public class UserStore {
 		userList.remove(user);
 	}
 
-	public int nextId(){
-		int id = 11;
-		ArrayList<UserDTO> temp = new ArrayList<UserDTO>();	
-		if(userList.size() >= 1){
-			for(int i = 0; i < userList.size() - 1; i++){
-				if(userList.get(i).getUserId() > userList.get(i + 1).getUserId())
-					temp.add(i + 1, userList.get(i));
-				else
-					temp.add(i, userList.get(i));
-			}
-		}
-		for(int i = 0; i < temp.size(); i++){
-			if(id == temp.get(i).getUserId())
-				id++;
-		}
-		return id;
-	}
-
 }
