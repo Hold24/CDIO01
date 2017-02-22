@@ -9,8 +9,9 @@ import entity.UserManagement;
 import entity.IUserDAO.DALException;
 
 public class Main {
+	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws DALException {
 		int x = TUI.whichProgram();
 		if(x == 1)
 			new Main().start();
@@ -52,8 +53,38 @@ public class Main {
 		} while(on);
 	}
 	
-	private void startText () {
-		
+	private void startText () throws DALException {
+		UserManagement um = new UserManagement();
+
+		um.loadUsersText();
+		boolean on = true;
+		do{
+			switch (TUI.Menu()) {
+			// create user
+			case 1: 
+				createUser(um);
+				break;
+				// Show user list
+			case 2: 
+				showUserlist(um);
+				break;
+				// Update user
+			case 3:
+				updateUser(um);
+				break;
+			case 4:
+				deleteUser(um);
+				break;
+			case 5:
+				on = false;
+				TUI.shutDown();
+				um.saveUsersText(um.getUserStore());
+				break;
+			default: 
+				break;
+
+			}
+		} while(on);	
 	}
 	
 	private void startDB () {
