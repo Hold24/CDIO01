@@ -78,8 +78,12 @@ public class UserDTO implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "UserDTO [userId=" + userId + ", userName=" + userName + ", ini=" + ini + ", password=" + password
-				+ ", cpr=" + cpr + ", roles=" + roles + "]";
+		if (this.roles.isEmpty())
+			return "| userId = " + userId + " | userName = " + userName + " | ini = " + ini + " | password = " + password
+					+ " | cpr = " + cpr + " | roles = [User has no roles] |";
+		else
+			return "| userId = " + userId + " | userName = " + userName + " | ini = " + ini + " | password = " + password
+					+ " | cpr = " + cpr + " | roles = " + roles + " |";
 	}
 
 

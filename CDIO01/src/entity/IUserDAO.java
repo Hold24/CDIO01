@@ -1,7 +1,5 @@
-package controller;
+package entity;
 import java.util.List;
-
-import entity.UserDTO;
 
 
 

@@ -34,6 +34,7 @@ public class passwordGenerator {
 			sb.append(Integer.toString(r));
 			x++;
 		} while (x != 3);
+
 		
 		return this.password = sb.toString();
 		

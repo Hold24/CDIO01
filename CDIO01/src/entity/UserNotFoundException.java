@@ -1,6 +1,6 @@
-package controller;
+package entity;
 
-import controller.IUserDAO.DALException;
+import entity.IUserDAO.DALException;
 
 public class UserNotFoundException extends DALException {
 

@@ -1,11 +1,9 @@
-package controller;
+package entity;
 
 import java.util.List;
 
 import boundary.TUI;
-import entity.UserDTO;
-import entity.UserStore;
-import entity.passwordGenerator;
+import entity.IUserDAO.DALException;
 
 public class UserManagement implements IUserDAO {
 
@@ -42,48 +40,54 @@ public class UserManagement implements IUserDAO {
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
 		//Update user
-		switch (TUI.updateMenu()) {
-		case 1:
-			user.setUserName(TUI.userName());
-			break;
-		case 2:
-			TUI.nextLine();
-			user.setCpr(TUI.userCPR());
-			break;
-		case 3: 
-			if (TUI.changeUserRole() == 1) {
-				user.roleRemover(TUI.removeRole(user.getRoles()));
-			}
-			else {
-				boolean hasRole = true;
-				do {
-					String role = TUI.addRole();
-					if (!user.getRoles().contains(role)){
-						user.addRole(role);
-						hasRole = false;
-					}
-					else
-						TUI.hasRole();
-				} while (hasRole);
-			}
-			break;
-		case 4: 
-			TUI.nextLine();
-			user.setIni(TUI.userInitials());
-			break;
-		case 5: 
-			user.setPassword(TUI.userPassword());
-			break;
-		default:
-			break;
-		}
+		
+		
+//		switch (TUI.updateMenu()) {
+//		case 1:
+//			user.setUserName(TUI.userName());
+//			break;
+//		case 2:
+//			TUI.nextLine();
+//			user.setCpr(TUI.userCPR());
+//			break;
+//		case 3: 
+//			if (TUI.changeUserRole() == 1) {
+//				user.roleRemover(TUI.removeRole(user.getRoles()));
+//			}
+//			else {
+//				boolean hasRole = true;
+//				do {
+//					String role = TUI.addRole();
+//					if (!user.getRoles().contains(role)){
+//						user.addRole(role);
+//						hasRole = false;
+//					}
+//					else
+//						TUI.hasRole();
+//				} while (hasRole);
+//			}
+//			break;
+//		case 4: 
+//			TUI.nextLine();
+//			user.setIni(TUI.userInitials());
+//			break;
+//		case 5: 
+//			user.setPassword(TUI.userPassword());
+//			break;
+//		default:
+//			break;
+//		}
 
 	}
 
 
 	@Override
 	public void deleteUser(int userId) throws DALException {
-		us.removeUser(us.getUserList().get(userId - 11));
+		
+		for (int i = 0; i < us.getUserList().size(); i++) {
+			if (userId == us.getUserList().get(i).getUserId())
+				us.removeUser(us.getUserList().get(i));
+		}
 //		if(us.getUserList().size() > 0)
 //			this.id = us.getUserList().get(us.getUserList().size() - 1).getUserId() + 1;
 	}

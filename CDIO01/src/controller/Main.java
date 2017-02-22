@@ -1,11 +1,12 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import boundary.TUI;
-import controller.IUserDAO.DALException;
-import controller.UserManagement;
 import entity.UserDTO;
+import entity.UserManagement;
+import entity.IUserDAO.DALException;
 
 public class Main {
 
@@ -99,7 +100,7 @@ public class Main {
 	private void showUserlist(UserManagement um) {
 		try {
 			ArrayList<UserDTO> userList = new ArrayList<UserDTO>(um.getUserList());
-			TUI.newLine();
+			//TUI.newLine();
 			for (int i = 0; i < userList.size(); i++) {
 				TUI.showUser(userList.get(i).toString());
 			}
@@ -111,23 +112,78 @@ public class Main {
 	}
 
 	private void updateUser(UserManagement um) {
+
+
 		try {
+
 			int id;
 			boolean userExists = false;
+			UserDTO user = null;
 			do {
 				id = TUI.chooseUser();
 				ArrayList<UserDTO> userList = new ArrayList<UserDTO>();
 				userList = (ArrayList<UserDTO>) um.getUserList();
 				for(int i = 0; i < userList.size(); i++){
 					if(id == userList.get(i).getUserId()){
-						um.updateUser(um.getUser(id));
+						user = userList.get(i);
 						userExists = true;
-						break;
+						//What to update on user
 					}
+
 				}
 				if(userExists == false)
 					TUI.nullUser();
 			} while (!userExists);
+			boolean updateUser = true;
+			do {
+				switch(TUI.updateMenu()) {
+				case 1:
+					user.setUserName(TUI.userName());
+					break;
+				case 2:
+					//TUI.nextLine();
+					user.setCpr(TUI.userCPR());
+					break;
+				case 3: 
+					//TUI.nextLine();
+					List<String> roles = new ArrayList<String>();
+					roles = user.getRoles();
+					int x = TUI.changeUserRole();
+					if (x == 1) {
+						user.roleRemover(TUI.removeRole(user.getRoles()));
+					}
+					else if (x == 2) {
+						if (roles.stream().count() == 4){
+							System.out.println("This user has all avaliable roles.\n");
+							break;
+						}
+						boolean hasRole = true;
+						do {
+							String role = TUI.addRole();
+							if (!user.getRoles().contains(role)){
+								user.addRole(role);
+								hasRole = false;
+							}
+							else
+								TUI.hasRole();
+						} while (hasRole);
+					}
+					break;
+				case 4: 
+					//TUI.nextLine();
+					user.setIni(TUI.userInitials());
+					break;
+				case 5:
+					user.setPassword(TUI.userPassword());
+					break;
+				case 6:
+					updateUser = false;
+					break;
+				default:
+					break;
+				}
+			} while (updateUser);
+
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
