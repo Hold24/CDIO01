@@ -11,7 +11,13 @@ import entity.IUserDAO.DALException;
 public class Main {
 
 	public static void main(String[] args) {
-		new Main().start();
+		int x = TUI.whichProgram();
+		if(x == 1)
+			new Main().start();
+		else if(x == 2)
+			new Main().startText();
+		else if (x == 3)
+			new Main().startDB();
 	}
 
 	private void start() {
@@ -44,6 +50,14 @@ public class Main {
 
 			}
 		} while(on);
+	}
+	
+	private void startText () {
+		
+	}
+	
+	private void startDB () {
+		
 	}
 
 	private void deleteUser(UserManagement um) {

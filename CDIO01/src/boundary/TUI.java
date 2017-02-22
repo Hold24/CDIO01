@@ -8,6 +8,25 @@ public class TUI {
 
 	static Scanner keyboard = new Scanner(System.in);
 
+	public static int whichProgram() {
+		System.out.println("Which of the following programs do you want to run? \n1. Regular program without saving to disk. \n2. Program which reads/writes users to a txt file. "
+				+ "\n3. Program which stores users in database.");
+		String str;
+		int x = 0;
+		do {
+			str = keyboard.nextLine();
+			try{
+				x = Integer.parseInt(str);
+				if (x < 1 || x > 4) throw new NumberFormatException();
+			} catch (NumberFormatException ne) {
+				//Du er en spade!
+			}
+			if(x < 1 || x > 4 || str.length() > 1 || str.length() < 1)
+				System.out.println("Not a valid input. Try again.");
+		} while (x < 1 || x > 4 || str.length() > 1 || str.length() < 1);
+		return x;
+	}
+	
 	public static int Menu(){
 		System.out.println("Choose one of the following options: \n1. Create user. \n2. Show users. \n3. Update user. \n4. Delete user. \n5. Log off.");
 		String str;
@@ -133,7 +152,7 @@ public class TUI {
 	}
 
 	public static String userInitials(){
-		System.out.println("Write the initials for this ser.");
+		System.out.println("Write the initials for this user.");
 		String str;
 		do {
 			str = keyboard.nextLine();
