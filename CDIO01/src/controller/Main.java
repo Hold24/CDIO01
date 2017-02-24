@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import boundary.TUI;
 import entity.UserDTO;
 import entity.UserManagement;
@@ -77,8 +76,8 @@ public class Main {
 				break;
 			case 5:
 				on = false;
-				TUI.shutDown();
 				um.saveUsersText(um.getUserStore());
+				TUI.shutDown();
 				break;
 			default: 
 				break;
@@ -87,8 +86,42 @@ public class Main {
 		} while(on);	
 	}
 	
-	private void startDB () {
-		
+	private void startDB () throws DALException {
+		UserManagement um = new UserManagement();
+
+		try {
+			um.loadUsersDB();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean on = true;
+		do{
+			switch (TUI.Menu()) {
+			// create user
+			case 1: 
+				createUser(um);
+				break;
+				// Show user list
+			case 2: 
+				showUserlist(um);
+				break;
+				// Update user
+			case 3:
+				updateUser(um);
+				break;
+			case 4:
+				deleteUser(um);
+				break;
+			case 5:
+				on = false;
+				TUI.shutDown();
+				break;
+			default: 
+				break;
+
+			}
+		} while(on);	
 	}
 
 	private void deleteUser(UserManagement um) {

@@ -6,12 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserManagement implements IUserDAO {
 
 	UserStore us = new UserStore();
+	MySQLAccess sql = new MySQLAccess();
+
 	passwordGenerator pg = new passwordGenerator();
 
 
@@ -34,7 +35,6 @@ public class UserManagement implements IUserDAO {
 
 	@Override
 	public void createUser(UserDTO user) throws DALException {
-		// TODO Auto-generated method stub
 		user.setPassword(pg.createPassword());
 		us.addUser(user);
 
@@ -156,6 +156,10 @@ public class UserManagement implements IUserDAO {
 				}
 			}
 		} 
+	}
+	
+	public void loadUsersDB() throws Exception{
+		sql.readDB();
 	}
 
 }
