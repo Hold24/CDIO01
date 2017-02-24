@@ -226,7 +226,7 @@ public class Main {
 	}
 	
 	private void showUserTable(UserManagement um) throws Exception {
-		um.showUsersDB();
+		TUI.printUserTable(um.showUsersDB());
 	}
 
 	private void updateUser(UserManagement um) {

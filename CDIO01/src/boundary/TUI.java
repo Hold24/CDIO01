@@ -249,5 +249,11 @@ public class TUI {
 	public static void idTaken(){
 		System.out.println("The user id you picked is already taken");
 	}
+	
+	public static void printUserTable(List<String> userList){		
+		for(int i = 0; i < userList.size(); i++){
+			System.out.println(userList.get(i));
+		}
+	}
 
 }

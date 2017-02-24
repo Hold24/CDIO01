@@ -160,8 +160,8 @@ public class UserManagement implements IUserDAO {
 		} 
 	}
 	
-	public void showUsersDB() throws Exception{
-		sql.readDB();
+	public List<String> showUsersDB() throws Exception{
+		return sql.readDB();
 	}
 	
 	public UserDTO loadUserDB(int id) throws SQLException{

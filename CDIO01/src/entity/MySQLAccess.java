@@ -1,11 +1,13 @@
 package entity;
 
+import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class MySQLAccess {
 	
@@ -30,7 +32,8 @@ public class MySQLAccess {
 	 */
 	
 	
-	public void readDB() throws Exception {
+	public List<String> readDB() throws Exception {
+		
 		try {
 			// This will load the MySQL driver
 			//			Class.forName("com.mysql.jdbc.Driver");
@@ -42,6 +45,7 @@ public class MySQLAccess {
 			// Result set get the result of the SQL query
 			resultSet = statement
 					.executeQuery("select * from users");
+			List<String> userList = new ArrayList<String>();
 			while(resultSet.next()){
 				// It is possible to get the columns via name
 				// also possible to get the columns via the column number
@@ -54,11 +58,13 @@ public class MySQLAccess {
 				String password = resultSet.getString("password");
 				String cpr = resultSet.getString("cpr");
 				String roles = resultSet.getString("roles");
-				System.out.println("UserID: " + userID + " | Name: " + name + " | Initials: " + ini + " | Password: " + password + " | CPR: " + cpr + " | Roles: " + roles);
-
+				String user = "UserID: " + userID + " | Name: " + name + " | Initials: " + ini + " | Password: " + password + " | CPR: " + cpr + " | Roles: " + roles;
+				userList.add(user);
 
 			}
-
+			
+			return userList;
+			
 		}
 		catch (Exception e) {
 			throw e;
