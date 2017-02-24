@@ -14,11 +14,20 @@ public class MySQLAccess {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	
+	/*
+	 * In order to use this version the following 3 lines must be modified, line 23 to specify the database url for the 
+	 * database that is to be used, line 25 to specify the user that accesses it and line 26 to specify his password.
+	 */
+	
 	// Database URL
 	static final String DB_path = "jdbc:mysql://localhost/cdio_1?";
 	// Database credentials
 	static final String user = "EinarLogi";
 	static final String pw = "qwe123";
+	/*
+	 * In order for the program to work as intended the Database must contain a table called
+	 *  users(UserID INT(10), name VARCHAR(20), initials VARCHAR(4), password VARCHAR(15), cpr VARCHAR(11), roles VARCHAR(100), primary key(UserID)) 
+	 */
 	
 	
 	public void readDB() throws Exception {
@@ -32,7 +41,7 @@ public class MySQLAccess {
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
 			resultSet = statement
-					.executeQuery("select * from cdio_1.users");
+					.executeQuery("select * from users");
 			while(resultSet.next()){
 				// It is possible to get the columns via name
 				// also possible to get the columns via the column number
@@ -64,7 +73,7 @@ public class MySQLAccess {
 	public boolean checkForUser(int id) throws SQLException {
 		connect = DriverManager.getConnection(DB_path, user, pw);
 		statement = connect.createStatement();
-		resultSet = statement.executeQuery("select * from cdio_1.users where userID = " + id);
+		resultSet = statement.executeQuery("select * from users where userID = " + id);
 		boolean userExists = resultSet.next();
 		close();
 		return userExists;
@@ -72,7 +81,7 @@ public class MySQLAccess {
 
 	public void writeUser(String[] A, int x) throws SQLException {
 		connect = DriverManager.getConnection(DB_path, user, pw);
-		preparedStatement = connect.prepareStatement("insert into cdio_1.users values (?,?,?,?,?,?)");
+		preparedStatement = connect.prepareStatement("insert into users values (?,?,?,?,?,?)");
 		preparedStatement.setInt(1, x);
 		preparedStatement.setString(2, A[0]);
 		preparedStatement.setString(3, A[1]);
@@ -86,7 +95,7 @@ public class MySQLAccess {
 
 	public void deleteUser(int id) throws SQLException {
 		connect = DriverManager.getConnection(DB_path, user, pw);
-		preparedStatement = connect.prepareStatement("delete from cdio_1.users where userID = " + id);
+		preparedStatement = connect.prepareStatement("delete from users where userID = " + id);
 		preparedStatement.executeUpdate();
 		close();
 	}
@@ -103,7 +112,7 @@ public class MySQLAccess {
 
 		statement = connect.createStatement();
 		resultSet = statement
-				.executeQuery("select * from cdio_1.users where userID = " + id);
+				.executeQuery("select * from users where userID = " + id);
 
 		String[] userValues = new String[5];
 		while(resultSet.next()){
