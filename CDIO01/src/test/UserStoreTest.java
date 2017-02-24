@@ -25,7 +25,7 @@ public class UserStoreTest {
 	}
 
 	@Test
-	public void testAddUser() throws DALException {
+	public void positiveTestAddUser() throws DALException {
 		
 		//Expects size to be 0, because it is empty.
 		int expected = 0;
@@ -40,14 +40,14 @@ public class UserStoreTest {
 	}
 	
 	@Test
-	public void testRemoveUser() throws DALException {
+	public void positiveTestRemoveUser() throws DALException {
 		us.addUser(new UserDTO());
 		
 		int expected = 1;
 		int actual = us.getUserList().size();
 		assertEquals(expected, actual);
 		
-		us.removeUser(us.getUser(0));
+		us.removeUser(us.getUserList().get(0));
 		
 		expected = 0;
 		actual = us.getUserList().size();
@@ -57,17 +57,26 @@ public class UserStoreTest {
 	@Test
 	public void test() throws DALException {
 		us.addUser(new UserDTO());
-		us.getUser(0).setUserName("Niklas");
+		us.getUserList().get(0).setUserName("Niklas");
 		us.addUser(new UserDTO());
-		us.getUser(1).setUserName("Sammy");
+		us.getUserList().get(1).setUserName("Sammy");
 		us.addUser(new UserDTO());
-		us.getUser(2).setUserName("Einar");
+		us.getUserList().get(2).setUserName("Einar");
 		us.addUser(new UserDTO());
-		us.getUser(3).setUserName("Mads");
+		us.getUserList().get(3).setUserName("Mads");
+		us.addUser(new UserDTO());
+		us.getUserList().get(4).setUserName("Michael");
 		
 		int i = 0;
-		if (us.getUserList().get(0))
-		us.getUserList().get(0);
+		assertEquals("Niklas", us.getUserList().get(i).getUserName());
+		i++;
+		assertEquals("Sammy", us.getUserList().get(i).getUserName());
+		i++;
+		assertEquals("Einar", us.getUserList().get(i).getUserName());
+		i++;
+		assertEquals("Mads", us.getUserList().get(i).getUserName());
+		i++;
+		assertEquals("Michael", us.getUserList().get(i).getUserName());
 	}
 
 }
