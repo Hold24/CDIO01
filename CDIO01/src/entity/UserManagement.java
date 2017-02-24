@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserManagement implements IUserDAO {
@@ -158,8 +160,48 @@ public class UserManagement implements IUserDAO {
 		} 
 	}
 	
-	public void loadUsersDB() throws Exception{
+	public void showUsersDB() throws Exception{
 		sql.readDB();
+	}
+	
+	public UserDTO loadUserDB(int id) throws SQLException{
+		UserDTO user = new UserDTO();
+		String[] userValues = new String[5];
+		userValues = sql.loadUser(id);
+		user.setUserName(userValues[0]);
+		user.setIni(userValues[1]);
+		user.setPassword(userValues[2]);
+		user.setCpr(userValues[3]);
+		List<String> roles = new ArrayList<String>();
+		for(int i = 0; i < userValues[4].split(", ").length; i++){
+			if(userValues[4].split(", ")[i].contains("Admin"))
+				roles[i] = "Admin";
+			else if(userValues[4].split(", ")[i].contains("Pharmacist"))
+				roles[i] = "Pharmacist";
+		}
+		
+		
+		return user;
+	}
+	
+	public boolean checkForUser(int id) throws Exception {
+		return sql.checkForUser(id);
+	}
+	
+	public void writeUserDB(String[] A, int x) throws SQLException {
+		sql.writeUser(A, x);
+	}
+	
+	public String generatePassword() {
+		return pg.createPassword();
+	}
+	
+	public void deleteUserDB(int id) throws SQLException {
+		sql.deleteUser(id);
+	}
+	
+	public void updateDBUser(String newValue, String column, int id) throws SQLException{
+		sql.updateUser(newValue, column, id);		
 	}
 
 }
