@@ -37,9 +37,5 @@ public class UserStore implements Serializable {
 	public void removeUser(UserDTO user){
 		userList.remove(user);
 	}
-	
-	public UserDTO getUser(int index) throws DALException {
-		return this.getUserList().get(index);
-	}
 
 }

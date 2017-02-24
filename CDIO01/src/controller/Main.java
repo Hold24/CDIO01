@@ -8,7 +8,7 @@ import entity.UserManagement;
 import entity.IUserDAO.DALException;
 
 public class Main {
-	
+
 
 	public static void main(String[] args) throws DALException {
 		int x = TUI.whichProgram();
@@ -16,8 +16,14 @@ public class Main {
 			new Main().start();
 		else if(x == 2)
 			new Main().startText();
-		else if (x == 3)
-			new Main().startDB();
+		else if (x == 3){
+			try {
+				new Main().startDB();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void start() {
@@ -51,7 +57,7 @@ public class Main {
 			}
 		} while(on);
 	}
-	
+
 	private void startText () throws DALException {
 		UserManagement um = new UserManagement();
 
@@ -85,33 +91,34 @@ public class Main {
 			}
 		} while(on);	
 	}
-	
-	private void startDB () throws DALException {
+
+	private void startDB () throws Exception {
 		UserManagement um = new UserManagement();
 
-		try {
-			um.loadUsersDB();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//		try {
+		//			um.loadUsersDB();
+		//		} catch (Exception e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
 		boolean on = true;
 		do{
 			switch (TUI.Menu()) {
 			// create user
 			case 1: 
-				createUser(um);
+				createUserDB(um);
 				break;
 				// Show user list
 			case 2: 
-				showUserlist(um);
+				showUserTable(um);
+				TUI.newLine();
 				break;
 				// Update user
 			case 3:
-				updateUser(um);
+				updateUserDB(um);
 				break;
 			case 4:
-				deleteUser(um);
+				deleteUserDB(um);
 				break;
 			case 5:
 				on = false;
@@ -123,6 +130,7 @@ public class Main {
 			}
 		} while(on);	
 	}
+	
 
 	private void deleteUser(UserManagement um) {
 		try {
@@ -142,6 +150,21 @@ public class Main {
 				if(userExists == false)
 					TUI.nullUser();
 			} while(!userExists);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void deleteUserDB(UserManagement um) throws Exception {
+		try {
+			int id;
+			do{
+				id = TUI.chooseUser();
+				if(!um.checkForUser(id))
+					TUI.nullUser();
+			} while(!um.checkForUser(id));
+			um.deleteUserDB(id);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -175,6 +198,30 @@ public class Main {
 		}
 	}
 
+	private void createUserDB(UserManagement um) throws Exception {
+		UserDTO user = new UserDTO();
+		int x;
+		do{
+			x = TUI.userId();
+			if(um.checkForUser(x))
+				TUI.idTaken();
+		} while(um.checkForUser(x));
+		String[] A = new String[5];
+		A[0] = TUI.userName();
+		A[1] = TUI.userInitials();
+		A[2] = um.generatePassword();
+		A[3] = TUI.userCPR();
+		A[4] = TUI.userRole().toString();
+		
+		um.writeUserDB(A, x);
+
+		try {
+			um.createUser(user);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void showUserlist(UserManagement um) {
 		try {
 			ArrayList<UserDTO> userList = new ArrayList<UserDTO>(um.getUserList());
@@ -187,6 +234,10 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void showUserTable(UserManagement um) throws Exception {
+		um.showUsersDB();
 	}
 
 	private void updateUser(UserManagement um) {
@@ -253,6 +304,74 @@ public class Main {
 					break;
 				case 5:
 					user.setPassword(TUI.userPassword());
+					break;
+				case 6:
+					updateUser = false;
+					break;
+				default:
+					break;
+				}
+			} while (updateUser);
+
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void updateUserDB(UserManagement um) throws Exception {
+
+
+		try {
+			
+			UserDTO user = new UserDTO();
+
+			int id;
+			do{
+				id = TUI.chooseUser();
+				if(!um.checkForUser(id))
+					TUI.nullUser();
+			} while(!um.checkForUser(id));
+			
+			boolean updateUser = true;
+			do {
+				switch(TUI.updateMenu()) {
+				case 1:
+					um.updateDBUser(TUI.userName(), "name", id);
+					break;
+				case 2:
+					//TUI.nextLine();
+					um.updateDBUser(TUI.userCPR(), "cpr", id);
+					break;
+				case 3: 
+					//TUI.nextLine();
+					
+					int x = TUI.changeUserRole();
+					if (x == 1) {
+						
+					}
+					else if (x == 2) {
+						if (roles.stream().count() == 4){
+							System.out.println("This user has all avaliable roles.\n");
+							break;
+						}
+						boolean hasRole = true;
+						do {
+							String role = TUI.addRole();
+							if (!user.getRoles().contains(role)){
+								user.addRole(role);
+								hasRole = false;
+							}
+							else
+								TUI.hasRole();
+						} while (hasRole);
+					}
+					break;
+				case 4: 
+					//TUI.nextLine();
+					um.updateDBUser(TUI.userInitials(), "initials", id);
+					break;
+				case 5:
+					um.updateDBUser(TUI.userPassword(), "password", id);
 					break;
 				case 6:
 					updateUser = false;
