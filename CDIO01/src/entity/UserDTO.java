@@ -77,22 +77,22 @@ public class UserDTO implements Serializable{
 		roles.remove(role);
 	}
 	
-	@Override
-	public String toString() {
-		return "UserDTO [userId=" + userId + ", userName=" + userName + ", ini=" + ini + ", password=" + password
-				+ ", cpr=" + cpr + ", roles=" + roles + "]";
-	}
-	
-	
 //	@Override
 //	public String toString() {
-//		if (this.roles.isEmpty())
-//			return "| userId = " + userId + " | userName = " + userName + " | ini = " + ini + " | password = " + password
-//					+ " | cpr = " + cpr + " | roles = [User has no roles] |";
-//		else
-//			return "| userId = " + userId + " | userName = " + userName + " | ini = " + ini + " | password = " + password
-//					+ " | cpr = " + cpr + " | roles = " + roles + " |";
+//		return "UserDTO [userId=" + userId + ", userName=" + userName + ", ini=" + ini + ", password=" + password
+//				+ ", cpr=" + cpr + ", roles=" + roles + "]";
 //	}
+	
+	
+	@Override
+	public String toString() {
+		if (this.roles.isEmpty())
+			return "UserId: " + userId + " | userName: " + userName + " | ini: " + ini + " | password: " + password
+					+ " | cpr: " + cpr + " | roles: [User has no roles]";
+		else
+			return "UserId: " + userId + " | userName: " + userName + " | ini: " + ini + " | password: " + password
+					+ " | cpr: " + cpr + " | roles: " + roles;
+	}
 
 
 

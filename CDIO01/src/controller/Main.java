@@ -206,20 +206,15 @@ public class Main {
 			if(um.checkForUser(x))
 				TUI.idTaken();
 		} while(um.checkForUser(x));
-		String[] A = new String[5];
-		A[0] = TUI.userName();
-		A[1] = TUI.userInitials();
-		A[2] = um.generatePassword();
-		A[3] = TUI.userCPR();
-		A[4] = TUI.userRole().toString();
-		
-		um.writeUserDB(A, x);
+		user.setUserId(x);
+		user.setUserName(TUI.userName());
+		user.setIni(TUI.userInitials());
+		user.setPassword(um.generatePassword());
+		user.setCpr(TUI.userCPR());
+		user.setRoles(TUI.userRole());
+		um.writeUserDB(user);
 
-		try {
-			um.createUser(user);
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	private void showUserlist(UserManagement um) {
@@ -265,6 +260,7 @@ public class Main {
 			} while (!userExists);
 			boolean updateUser = true;
 			do {
+				TUI.showUser(user.toString());
 				switch(TUI.updateMenu()) {
 				case 1:
 					user.setUserName(TUI.userName());
@@ -324,7 +320,6 @@ public class Main {
 		try {
 			
 			UserDTO user = new UserDTO();
-
 			int id;
 			do{
 				id = TUI.chooseUser();
@@ -332,25 +327,29 @@ public class Main {
 					TUI.nullUser();
 			} while(!um.checkForUser(id));
 			
+			user = um.loadUserDB(id);
 			boolean updateUser = true;
 			do {
+				System.out.println(user.toString());
 				switch(TUI.updateMenu()) {
 				case 1:
-					um.updateDBUser(TUI.userName(), "name", id);
+					String name = TUI.userName();
+					um.updateDBUser(name, "name", id);
+					user.setUserName(name);
 					break;
 				case 2:
-					//TUI.nextLine();
-					um.updateDBUser(TUI.userCPR(), "cpr", id);
+					String CPR = TUI.userCPR();
+					um.updateDBUser(CPR, "cpr", id);
+					user.setCpr(CPR);
 					break;
 				case 3: 
-					//TUI.nextLine();
 					
 					int x = TUI.changeUserRole();
 					if (x == 1) {
-						
+						user.roleRemover(TUI.removeRole(user.getRoles()));
 					}
 					else if (x == 2) {
-						if (roles.stream().count() == 4){
+						if (user.getRoles().stream().count() == 4){
 							System.out.println("This user has all avaliable roles.\n");
 							break;
 						}
@@ -364,14 +363,18 @@ public class Main {
 							else
 								TUI.hasRole();
 						} while (hasRole);
+						um.updateDBUser(user.getRoles().toString(), "roles", user.getUserId());
 					}
 					break;
 				case 4: 
-					//TUI.nextLine();
-					um.updateDBUser(TUI.userInitials(), "initials", id);
+					String ini = TUI.userInitials();
+					um.updateDBUser(ini, "initials", id);
+					user.setIni(ini);
 					break;
 				case 5:
-					um.updateDBUser(TUI.userPassword(), "password", id);
+					String pw = TUI.userPassword();
+					um.updateDBUser(pw, "password", id);
+					user.setPassword(pw);
 					break;
 				case 6:
 					updateUser = false;

@@ -168,6 +168,7 @@ public class UserManagement implements IUserDAO {
 		UserDTO user = new UserDTO();
 		String[] userValues = new String[5];
 		userValues = sql.loadUser(id);
+		user.setUserId(id);
 		user.setUserName(userValues[0]);
 		user.setIni(userValues[1]);
 		user.setPassword(userValues[2]);
@@ -175,11 +176,15 @@ public class UserManagement implements IUserDAO {
 		List<String> roles = new ArrayList<String>();
 		for(int i = 0; i < userValues[4].split(", ").length; i++){
 			if(userValues[4].split(", ")[i].contains("Admin"))
-				roles[i] = "Admin";
+				roles.add("Admin");
 			else if(userValues[4].split(", ")[i].contains("Pharmacist"))
-				roles[i] = "Pharmacist";
+				roles.add("Pharmacist");
+			else if(userValues[4].split(", ")[i].contains("Foreman"))
+				roles.add("Foreman");
+			else if(userValues[4].split(", ")[i].contains("Operator"))
+				roles.add("Operator");
 		}
-		
+		user.setRoles(roles);
 		
 		return user;
 	}
@@ -188,8 +193,16 @@ public class UserManagement implements IUserDAO {
 		return sql.checkForUser(id);
 	}
 	
-	public void writeUserDB(String[] A, int x) throws SQLException {
-		sql.writeUser(A, x);
+	public void writeUserDB(UserDTO user) throws SQLException {
+		int id;
+		String[] values = new String[5];
+		id = user.getUserId();
+		values[0] = user.getUserName();
+		values[1] = user.getIni();
+		values[2] = user.getPassword();
+		values[3] = user.getCpr();
+		values[4] = user.getRoles().toString();
+		sql.writeUser(values, id);
 	}
 	
 	public String generatePassword() {
