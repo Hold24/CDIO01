@@ -71,8 +71,7 @@ public class MySQLAccess {
 	}
 
 	public void writeUser(String[] A, int x) throws SQLException {
-		connect = DriverManager.getConnection("jdbc:mysql://localhost/cdio_1?"
-				+ "user=EinarLogi&password=qwe123");
+		connect = DriverManager.getConnection(DB_path, user, pw);
 		preparedStatement = connect.prepareStatement("insert into cdio_1.users values (?,?,?,?,?,?)");
 		preparedStatement.setInt(1, x);
 		preparedStatement.setString(2, A[0]);
