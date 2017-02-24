@@ -6,12 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserManagement implements IUserDAO {
 
 	UserStore us = new UserStore();
-	//private int id = 11;
 	passwordGenerator pg = new passwordGenerator();
 
 
