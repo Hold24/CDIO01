@@ -9,8 +9,8 @@ public class TUI {
 	static Scanner keyboard = new Scanner(System.in);
 
 	public static int whichProgram() {
-		System.out.println("Which of the following programs do you want to run? \n1. Regular program without saving to disk. \n2. Program which reads/writes users to a txt file. "
-				+ "\n3. Program which stores users in database.");
+		System.out.println("Which version of the program would you like to run? \n1. Regular version without saving to disk. \n2. The version which reads/writes users to a txt file. "
+				+ "\n3. The version which stores users in database.");
 		String str;
 		int x = 0;
 		do {

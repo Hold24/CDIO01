@@ -26,14 +26,16 @@ public class passwordGeneratorTest {
 	@Test
 	public void testPasswordGenerator() {
 		//Expects the password to be different all 1.000.000 times. It can be the same, but in our case, the risk of a password being the same is extremly low, and therefor not expected.
-		int expected = 0, actual = 1000000;
+		int expected = 0, actual = 20000000;
 		String s1 = pg.createPassword(), s2 = null;
 		
-		for (int i = 0; i < 999999; i++) {
+		for (int i = 0; i < 20000000; i++) {
 			s2 = pg.createPassword();
 			if (s1 != s2)
 				actual--;
 		}
+		assertEquals(expected, actual);
 	}
+	
 
 }

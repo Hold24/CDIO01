@@ -2,8 +2,6 @@ package entity;
 
 public class passwordGenerator {
 	
-	private String password;
-	
 	public String createPassword() {
 		
 		StringBuffer sb = new StringBuffer();
@@ -36,7 +34,7 @@ public class passwordGenerator {
 		} while (x != 3);
 
 		
-		return this.password = sb.toString();
+		return sb.toString();
 		
 	}
 	

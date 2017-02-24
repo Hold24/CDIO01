@@ -95,12 +95,6 @@ public class Main {
 	private void startDB () throws Exception {
 		UserManagement um = new UserManagement();
 
-		//		try {
-		//			um.loadUsersDB();
-		//		} catch (Exception e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
 		boolean on = true;
 		do{
 			switch (TUI.Menu()) {
