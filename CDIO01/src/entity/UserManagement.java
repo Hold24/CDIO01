@@ -11,7 +11,7 @@ import java.util.List;
 public class UserManagement implements IUserDAO {
 
 	UserStore us = new UserStore();
-	//private int id = 11;
+	MySQLAccess sql = new MySQLAccess();
 	passwordGenerator pg = new passwordGenerator();
 
 
@@ -34,7 +34,6 @@ public class UserManagement implements IUserDAO {
 
 	@Override
 	public void createUser(UserDTO user) throws DALException {
-		// TODO Auto-generated method stub
 		user.setPassword(pg.createPassword());
 		us.addUser(user);
 
@@ -156,6 +155,10 @@ public class UserManagement implements IUserDAO {
 				}
 			}
 		} 
+	}
+	
+	public void loadUsersDB() throws Exception{
+		sql.readDB();
 	}
 
 }
